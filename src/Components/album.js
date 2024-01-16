@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 
 function Album() {
   const [album, setAlbum] = useState([]);
-  const [newalbum,setnewAlbum]=useState({title:"New Album"});
+  const [newalbum,setnewAlbum]=useState("");
   console.log(album)
   useEffect(() => {
     //fetching the data
