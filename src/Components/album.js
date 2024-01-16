@@ -21,16 +21,41 @@ function Album() {
     fetchdata();
   }, []);
 
+  const deleteAlbum = async (albumId) => {
+     try {
+        const response=await fetch(`https://jsonplaceholder.typicode.com/albums/${albumId}`,{
+            method:'DELETE',
+        });
+        if(!response.ok){
+            throw new Error("cannot get the data with given id");
+
+        }
+
+        const updateAlbum=await album.filter((item)=> item.id!==albumId);
+        setAlbum(updateAlbum);
+        
+     } catch (error) {
+        
+     }
+  };
+
   return (
     <>
-      <ol>
+      <ol className="Album">
+        <h1>ALBUMS</h1>
         {album.map((item, index) => {
           return (
-            <div key={index} style={{ color: "blue" }}>
+            <div key={index} style={{ color: "white" }}>
               <li>
                 {item.title}
                 <button>Update</button>
-                <button>delete</button>
+                <button
+                  onClick={() => {
+                    deleteAlbum(item.id);
+                  }}
+                >
+                  delete
+                </button>
               </li>
             </div>
           );
@@ -38,6 +63,8 @@ function Album() {
       </ol>
       <div>
         <h2>Add A new Album</h2>
+        <input type="text" placeholder="Enter the Title" />
+        <button>Add Album </button>
       </div>
     </>
   );
