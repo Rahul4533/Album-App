@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 
 function Album() {
   const [album, setAlbum] = useState([]);
+  const [newalbum,setnewAlbum]=useState({title:"New Album"});
+  console.log(album)
   useEffect(() => {
     //fetching the data
     async function fetchdata() {
@@ -20,6 +22,30 @@ function Album() {
 
     fetchdata();
   }, []);
+
+  const addAlbum=async ()=>{
+    try {
+        const response = await fetch('https://jsonplaceholder.typicode.com/albums', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({userId:album.id+1,
+          title:newalbum}),
+        });
+
+        if(!response.ok){
+            throw new Error('not abel to get the data');
+        }
+
+        const a=await response.json();
+        setAlbum([...album,a]);
+        setnewAlbum("");
+
+    } catch (error) {
+        console.log("error",error);
+    }
+  }
 
   const deleteAlbum = async (albumId) => {
      try {
@@ -63,8 +89,8 @@ function Album() {
       </ol>
       <div>
         <h2>Add A new Album</h2>
-        <input type="text" placeholder="Enter the Title" />
-        <button>Add Album </button>
+        <input type="text" placeholder="Enter the Title" value={newalbum} onChange={(e)=>setnewAlbum(e.target.value)}/>
+        <button onClick={addAlbum}>Add Album </button>
       </div>
     </>
   );
