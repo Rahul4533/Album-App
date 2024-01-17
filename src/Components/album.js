@@ -23,6 +23,7 @@ function Album() {
     fetchdata();
   }, []);
 
+  //adding method
   const addAlbum=async ()=>{
     try {
         const response = await fetch('https://jsonplaceholder.typicode.com/albums', {
@@ -47,6 +48,7 @@ function Album() {
     }
   }
 
+  //update methods
 
   const updateAlbum=async (albumId)=>{
     try {
@@ -78,6 +80,8 @@ function Album() {
       
     }
   }
+
+  // delete method
   const deleteAlbum = async (albumId) => {
      try {
         const response=await fetch(`https://jsonplaceholder.typicode.com/albums/${albumId}`,{
