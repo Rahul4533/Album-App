@@ -47,6 +47,31 @@ function Album() {
     }
   }
 
+
+  const updateAlbum=async (albumId)=>{
+    try {
+      const response=await fetch(`https://jsonplaceholder.typicode.com/albums/${albumId}`,{
+        method:'PUT',
+        headers:
+          {
+            'Content-Type': 'application/json',
+          },
+        body: JSON.stringify({title:"Title Updated!!"}),
+
+      })
+
+      if(!response.ok){
+        throw new Error('not abel to fetch the data from given id');
+
+      }
+      const result=await response.json();
+      setAlbum(result);
+
+      
+    } catch (error) {
+      
+    }
+  }
   const deleteAlbum = async (albumId) => {
      try {
         const response=await fetch(`https://jsonplaceholder.typicode.com/albums/${albumId}`,{
@@ -74,7 +99,7 @@ function Album() {
             <div key={index} style={{ color: "white" }}>
               <li>
                 {item.title}
-                <button>Update</button>
+                <button onClick={()=>updateAlbum(item.id)}>Update</button>
                 <button
                   onClick={() => {
                     deleteAlbum(item.id);
