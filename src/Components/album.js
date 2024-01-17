@@ -65,7 +65,13 @@ function Album() {
 
       }
       const result=await response.json();
-      setAlbum(result);
+      const update = album.map((album) =>
+      album.id === albumId ? result : album
+    );
+
+    setAlbum(update);
+
+      
 
       
     } catch (error) {
